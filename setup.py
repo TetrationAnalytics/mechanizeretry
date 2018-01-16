@@ -10,6 +10,6 @@ setup(
     author='Mike Timm',
     author_email='mtimm@tetrationanalytics.com',
     description='Adds hang protection and retries to mechanize',
-    keywords=['mechanize, 'retry'],
+    keywords=['mechanize', 'retry'],
     classifiers=['Development Status :: 5 - Production/Stable'],
 )
