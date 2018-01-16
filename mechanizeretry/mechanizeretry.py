@@ -50,12 +50,13 @@ class RetryBrowser(mechanize.Browser):
         with Timeout(timeout):
             return mechanize.Browser.open(self, request)
 
-    def open(self, url, data=None, headers=None, retries=None, delay=None,
+    def open(self, url, data=None, headers=None, retries=None, delay=None, backoff=None,
              timeout=None):
         timeout = self.global_timeout if timeout is None else timeout
         # Reset to sane values if needed.
         retries = 1 if retries is None or retries == 0 else retries
         delay = 0 if delay is None else delay
+        backoff = 1 if backoff is None or backoff == 0 else backoff
         # Retry with sleep on certain errors
         for atry in range(1, retries + 1):
             try:
@@ -72,6 +73,9 @@ class RetryBrowser(mechanize.Browser):
                 logger.error("Open request to {0} timed out".format(url))
                 if atry == retries:
                     raise TimeoutException("Open request to {0} timed out".format(url))
+            delay = delay * backoff
+            if backoff != 1:
+                logger.info("Backed delay off by a factor of {0} to {1}".format(backoff, delay))
             time.sleep(delay)
 
     def _submit(self, timeout=None, *args, **kwargs):
@@ -79,11 +83,12 @@ class RetryBrowser(mechanize.Browser):
         with Timeout(timeout):
             return mechanize.Browser.submit(self, *args, **kwargs)
 
-    def submit(self, retries=None, delay=None, timeout=None, *args, **kwargs):
+    def submit(self, retries=None, delay=None, backoff=None, timeout=None, *args, **kwargs):
         timeout = self.global_timeout if timeout is None else timeout
         # Reset for sane values
         retries = 1 if retries is None or retries == 0 else retries
         delay = 0 if delay is None else delay
+        backoff = 1 if backoff is None or backoff == 0 else backoff
         # Retry with sleep on HTTPError, URLError and BadStatusLine
         for atry in range(1, retries + 1):
             try:
@@ -100,6 +105,9 @@ class RetryBrowser(mechanize.Browser):
                 logger.error("Submit request timed out")
                 if atry == retries:
                     raise TimeoutException("Submit request timed out")
+            delay = delay * backoff
+            if backoff != 1:
+                logger.info("Backed delay off by a factor of {0} to {1}".format(backoff, delay))
             time.sleep(delay)
 
     def _select_form(self, timeout=None, *args, **kwargs):
@@ -107,11 +115,12 @@ class RetryBrowser(mechanize.Browser):
         with Timeout(timeout):
             return mechanize.Browser.select_form(self, *args, **kwargs)
 
-    def select_form(self, retries=None, delay=None, timeout=None, *args, **kwargs):
+    def select_form(self, retries=None, delay=None, backoff=None, timeout=None, *args, **kwargs):
         timeout = self.global_timeout if timeout is None else timeout
         # Reset for sane values
         retries = 1 if retries is None or retries == 0 else retries
         delay = 0 if delay is None else delay
+        backoff = 1 if backoff is None or backoff == 0 else backoff
         for atry in range(1, retries + 1):
             try:
                 return self._select_form(timeout, *args, **kwargs)
@@ -119,4 +128,7 @@ class RetryBrowser(mechanize.Browser):
                 logger.error("select_form request timed out")
                 if atry == retries:
                     raise TimeoutException("select_form request timed out")
+            delay = delay * backoff
+            if backoff != 1:
+                logger.info("Backed delay off by a factor of {0} to {1}".format(backoff, delay))
             time.sleep(delay)
