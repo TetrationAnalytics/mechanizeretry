@@ -12,3 +12,6 @@ egg:
 
 wheel:
 	python setup.py bdist_wheel
+
+all:
+	python setup.py sdist bdist_egg bdist_wheel

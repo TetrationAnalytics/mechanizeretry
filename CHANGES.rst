@@ -2,6 +2,11 @@
 Change Log
 ==========
 
+Version 1.4
+-----------
+
+* Add a Manifest.in file
+
 Version 1.3
 -----------
 
