@@ -2,6 +2,11 @@
 Change Log
 ==========
 
+Version 1.3
+-----------
+
+* Update setup.py to include the license and long description.
+
 Version 1.2
 -----------
 
