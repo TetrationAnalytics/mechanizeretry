@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='mechanizeretry',
-    version='1.0',
+    version='1.1',
     install_requires=['mechanize'],
     packages=['mechanizeretry'],
     url='https://github.com/mtimm/mechanizeretry',
