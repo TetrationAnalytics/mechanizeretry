@@ -1,5 +1,11 @@
+==========
 Change Log
 ==========
+
+Version 1.2
+-----------
+
+* Update md to be rst.
 
 Version 1.1
 -----------
