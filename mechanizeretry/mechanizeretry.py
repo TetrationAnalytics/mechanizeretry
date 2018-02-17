@@ -7,6 +7,14 @@ from urllib2 import HTTPError, URLError
 
 from timeout import Timeout, TimeoutException
 
+try:  # Python 2.7+
+    from logging import NullHandler
+except ImportError:
+    class NullHandler(logging.Handler):
+        def emit(self, record):
+            pass
+    logging.NullHandler = NullHandler
+
 
 logger = logging.getLogger("mechanizeretry")
 logger.addHandler(logging.NullHandler())
