@@ -5,7 +5,7 @@ setup(
     version='1.1',
     install_requires=['mechanize'],
     packages=['mechanizeretry'],
-    url='https://github.com/mtimm/mechanizeretry',
+    url='https://github.com/TetrationAnalytics/mechanizeretry',
     license='Apache 2.0',
     author='Mike Timm',
     author_email='mtimm@tetrationanalytics.com',
