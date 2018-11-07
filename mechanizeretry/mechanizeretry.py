@@ -69,7 +69,7 @@ class RetryBrowser(mechanize.Browser):
         for atry in range(1, retries + 1):
             try:
                 return self._open(url, data=data, headers=headers, timeout=timeout)
-            except (HTTPError, URLError, BadStatusLine, socket.timeout, socket.error), e:
+            except (HTTPError, BadStatusLine, socket.timeout, socket.error), e:
                 logger.error("Open of '{0}' failed - Error: {1}".format(url, e))
                 try:
                     logger.error("Response:\n{0}".format(e.read()))
@@ -77,6 +77,10 @@ class RetryBrowser(mechanize.Browser):
                     pass
                 if atry == retries:
                     raise
+            except URLError, e:
+                # Raise URLError right away, don't retry
+                logger.error("Open of '{0}' failed - Error: {1}".format(url, e))
+                raise
             except TimeoutException:
                 logger.error("Open request to {0} timed out".format(url))
                 if atry == retries:
