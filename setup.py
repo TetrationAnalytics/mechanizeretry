@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='mechanizeretry',
-    version='1.4',
+    version='1.5',
     install_requires=['mechanize'],
     packages=['mechanizeretry'],
     url='https://github.com/TetrationAnalytics/mechanizeretry',
