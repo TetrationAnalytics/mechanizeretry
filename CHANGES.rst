@@ -2,6 +2,17 @@
 Change Log
 ==========
 
+Version 1.6
+-----------
+
+* socket timeouts are included in URLErrors so retry on those but fail early
+  on other URLError exceptions
+
+Version 1.5
+-----------
+
+* Fail early on URLError type errors
+
 Version 1.4
 -----------
 
