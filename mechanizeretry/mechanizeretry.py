@@ -78,9 +78,13 @@ class RetryBrowser(mechanize.Browser):
                 if atry == retries:
                     raise
             except URLError, e:
-                # Raise URLError right away, don't retry
                 logger.error("Open of '{0}' failed - Error: {1}".format(url, e))
-                raise
+                if 'Connection timed out' not in e.reason:
+                    # Raise URLError right away if the error is not a timeout
+                    logger.error("Open of '{0}' failed - Error: {1}".format(url, e))
+                    raise
+                if atry == retries:
+                    raise
             except TimeoutException:
                 logger.error("Open request to {0} timed out".format(url))
                 if atry == retries:
